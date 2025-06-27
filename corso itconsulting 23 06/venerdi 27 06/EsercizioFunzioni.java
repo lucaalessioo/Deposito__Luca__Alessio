@@ -3,63 +3,62 @@ import java.util.Scanner;
 public class EsercizioFunzioni {
    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Benvenuto nel programma per calcolare fattoriali e potenze.");
-        String scelta;
+        String continua;
 
-        // Ciclo per il menu 
+        // ciclo do per il menu 
         do {
-            System.out.println("\nCosa vuoi calcolare?");
-            System.out.println("1. Fattoriale");
-            System.out.println("2. Potenza");
-            System.out.print("Inserisci 1 o 2: ");
-            int opzione = scanner.nextInt();
-            
-            // Controllo cosa si sceglie nel menu e eseguo la rispettiva operazione
-            switch (opzione) {
+            System.out.println("\nBenvenuto!");
+            System.out.println("Scegli cosa vuoi fare:");
+            System.out.println("1. Calcolare il fattoriale");
+            System.out.println("2. Calcolare una potenza");
 
-                // nel primo caso calcolo il fattoriale 
-                case 1:
-                    System.out.print("Inserisci un numero intero per calcolare il suo fattoriale: ");
-                    int numero = scanner.nextInt();
-                    int risultatoFattoriale = fattoriale(numero);        // Richiamo la funzione statica scritto fuori dal main
+            int scelta = scanner.nextInt();
 
-                    // controllo sul numero inserito non deve essere minore di 0 
-                    if (numero < 0) {
-                        System.out.println("Il fattoriale non è definito per numeri negativi.");
-                    } else {
-                        System.out.println("Il fattoriale di " + numero + " è: " + risultatoFattoriale);    // stampo il risultato
-                    }
-                    break;
+            // scelta 1 fattoriale
+            if (scelta == 1) {
+                System.out.print("Inserisci un numero intero: ");
+                int numero = scanner.nextInt();
 
-                    // nel secondo caso calcolo la potenza
-                case 2:
-                    System.out.print("Inserisci la base (numero intero): ");     // chiedo il numero da elevare 
-                    int base = scanner.nextInt();
-                    System.out.print("Inserisci l'esponente (numero intero): ");    // chiedo l esponente
-                    int esponente = scanner.nextInt();
-                    int risultatoPotenza = potenza(base, esponente);  // richiamo il metodo statico potenza scritto fuori dal main
-                    System.out.println(base + "^" + esponente + " = " + risultatoPotenza);
-                    break;
+                // controllo se l inserimento è un numero maggiore di 0 altrimenti stampo errore
+                if (numero < 0) {
+                    System.out.println("Il fattoriale non è definito per numeri negativi.");
 
-                    // caso di default inseremento errato
-                default:
-                    System.out.println("Opzione non valida. Inserisci 1 o 2.");
+                    // stampo del fattoriale
+                } else {
+                    System.out.println("Il fattoriale di " + numero + " è: " + fattoriale(numero));
+                }
+
+                // scelta 2 calcolo la potenza 
+            } else if (scelta == 2) {
+                System.out.print("Inserisci la base : ");
+                int base = scanner.nextInt();
+                System.out.print("Inserisci l'esponente: ");
+                int esponente = scanner.nextInt();
+
+                // controllo sul numero dell esponente che non puo essere negativo
+                if (esponente < 0) {
+                    System.out.println("L'esponente deve essere maggiore o uguale a zero.");
+                    // richiamo il metodo potenza scritto sotto fuori dal main 
+                } else {
+                    System.out.println(base + " elevato a " + esponente + " è: " + potenza(base, esponente));
+                }
+            } else {
+                System.out.println("Scelta non valida.");
             }
 
-            System.out.print("\nVuoi fare un altro calcolo? (sì/no): ");  // chiedo se si vuole continuare a restare all interno del programma
-            scelta = scanner.next();
+            // chiedo se si vuole continuare 
+            System.out.print("\nVuoi fare un altro calcolo? (sì/no): ");
+            scanner.nextLine();
+            continua = scanner.nextLine();
 
-        } while (scelta.equalsIgnoreCase("sì") || scelta.equalsIgnoreCase("si"));      // condizione di uscita 
+        } while (continua.equalsIgnoreCase("sì") || continua.equalsIgnoreCase("si"));   // controllo per l uscita
 
         System.out.println("Grazie per aver usato il programma!");
         scanner.close();
     }
 
-    // Metodo per il calcolo del fattoriale
+    // funzione per il fattoriale 
     public static int fattoriale(int n) {
-        if (n < 0) {
-            return 0;
-        } 
         int risultato = 1;
         for (int i = 1; i <= n; i++) {
             risultato *= i;
@@ -67,16 +66,11 @@ public class EsercizioFunzioni {
         return risultato;
     }
 
-    // Metodo per il calcolo della potenza
+    //funzione per il calcolo della potenza
     public static int potenza(int base, int esponente) {
         int risultato = 1;
-        for (int i = 0; i < Math.abs(esponente); i++) {
+        for (int i = 0; i < esponente; i++) {
             risultato *= base;
-        }
-        // Se l'esponente è negativo restituisco 0 
-        if (esponente < 0) {
-            System.out.println("Nota: l'esponente è negativo, il risultato sarà approssimato a 0 (solo interi positivi).");
-            return 0;
         }
         return risultato;
     }
