@@ -1,7 +1,11 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class EsercizioGeneraleFunzioni {
     public static void main(String[] args) {
+        Random random = new Random(); 
         // Creo lo scanner
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -9,19 +13,21 @@ public class EsercizioGeneraleFunzioni {
 
         // Ciclo infinito per il menu
         while (true) {
+            System.out.println("\n--- Menu per scegliere cosa fare ---");
             System.out.println("Digita 1. Funzione base");
             System.out.println("Digita 2. Funzione multiply interi");
             System.out.println("Digita 3. Funzione multiply numeri con virgola mobile");
             System.out.println("Digita 4. Funzione ricorsiva");
             System.out.println("Digita 5. Funzione passaggio per valore e per riferimento");
-            System.out.println("Digita 6. Esci");
+            System.out.println("Digita 6. Funzione stampa elementi arraylist.");
+            System.out.println("Digita 7. Esci");
 
             int scelta = scanner.nextInt();
 
             // Funzione base
             if (scelta == 1) {
-                System.out.println("Funzione per il calcolo della somma di due numeri.");
-                System.out.println("Inserisci il primo numero ");
+                System.out.println("Funzione per il calcolo della somma di due numeri\n");
+                System.out.println("Inserisci il primo numero: ");
                 int numero1 = scanner.nextInt();
                 System.out.println("Inserisci il secondo numero ");
                 int numero2 = scanner.nextInt();
@@ -33,6 +39,7 @@ public class EsercizioGeneraleFunzioni {
 
             // Funzione multiply con numeri interi
             if(scelta == 2) {
+                System.out.println("Funzione per il calcolo della moltiplicazione di due numeri interi! \n");
                 System.out.println("Inserisci il primo numero intero: ");
                 int num1 = scanner.nextInt();
                 System.out.println("Inserisci il secondo numero intero: ");
@@ -44,6 +51,7 @@ public class EsercizioGeneraleFunzioni {
 
             // Funzione multiply con numeri in virgola mobile
                 if(scelta == 3) {
+                System.out.println("Funzione per il calcolo della moltiplicazione di tre numeri con virgola mobile! \n");
                 System.out.println("Inserisci il primo numero con virgola: ");
                 double num1 = scanner.nextDouble();
                 System.out.println("Inserisci il secondo numero con virgola: ");
@@ -57,6 +65,7 @@ public class EsercizioGeneraleFunzioni {
 
             // Funzione ricorsiva
             if (scelta == 4) {
+                System.out.println("Funzione ricorsiva del numero inserito ! \n");
                 System.out.println("Inserisci il numero da sommare: ");
                 int n = scanner.nextInt();
                 int risultato = funzioneRicorsiva(n);
@@ -65,7 +74,7 @@ public class EsercizioGeneraleFunzioni {
                 System.out.println();
             }
 
-            // Passaggio per valore o riferimento
+            // Funzione per passaggio per valore o riferimento
             if (scelta == 5) {
                 System.out.println("Digita 1. Modifica per valore, Digita 2. Modifica per riferimento");
                 int valore = scanner.nextInt();
@@ -97,8 +106,23 @@ public class EsercizioGeneraleFunzioni {
                 }
             }
 
+            // Funzione per stampare gli elementi dell arraylist
+            if(scelta == 6) {
+                System.out.println("Funzione per stampare gli elemnti di un array list! \n ");
+                ArrayList<Integer> arrayList = new ArrayList<>();   // Creazione dell arraylist
+                
+                // Ciclo per riempire l array. lunghezza 10 con utilizzo della classe random 
+                for(int i = 0 ; i<10 ; i++) {
+                    Integer numero = random.nextInt(100) +1;    // numeri compresi tra 0 e 100
+                    arrayList.add(numero);     // aggiungo l elemento nella arraylist
+                }
+                System.out.println("Gli elementi dell array sono : ");
+                Collections.sort(arrayList);            // Ordino l arraylist
+                stampaElementiArrayList(arrayList);         // richiamo della funzione  stampaElementiArrayList
+            }
+
             // Uscita
-            if (scelta == 6) {
+            if (scelta == 7) {
                 System.out.println("Arrivederci!");
                 scanner.close();
                 return;
@@ -140,6 +164,13 @@ public class EsercizioGeneraleFunzioni {
             n[i] = n[i] * 10;
         }
         return n;
+    }
+
+    // Fuznione per la stampa dell arraylist
+    public static void stampaElementiArrayList(ArrayList<Integer> listaNumeri) {
+     for(Integer numero :  listaNumeri) {
+        System.out.print(numero + " ");
+     }
     }
 
 }
