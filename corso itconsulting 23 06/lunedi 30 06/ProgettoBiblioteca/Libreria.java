@@ -58,7 +58,7 @@ public class Libreria {
         // se non entra in nessuno dei due if precedenti imposto la disponibilita del  libro su false
         libro.disponibile = false;
         libro.giorniInPrestito = 0;                                                         // resetta il contatore quando il libro viene preso
-        utente.libriInPrestito.add(libro);                                                  //aggiungo il libro nella lista dell utente
+        utente.libriInPrestito.add(libro);                                                  // aggiungo il libro nella lista dell utente
         System.out.println(utente.username + " ha preso in prestito: " + libro.titolo);
         return true;
     }
