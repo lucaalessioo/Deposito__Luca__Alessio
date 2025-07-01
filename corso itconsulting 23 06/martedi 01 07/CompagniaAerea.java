@@ -21,11 +21,8 @@ public class CompagniaAerea {
             System.out.println("3. Visualizza tutte le info");
             System.out.println("4. Esci");
             System.out.print("Scegli: ");
-
-         
             scelta = interi.nextInt();
             
-
             switch (scelta) {
                 // Apertura menu degli aerei
                 case 1:
