@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class EsercizioHotel {
     public static void main(String[] args) {
@@ -18,22 +19,21 @@ public class EsercizioHotel {
         hotel.addCamera(suite1);
         hotel.addCamera(suite2);
 
+        // Chiedo all'utente se vuole vedere il prezzo
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Vuoi visualizzare anche il prezzo delle camere? (true/false): ");
+        boolean mostraPrezzo = scanner.nextBoolean();
+        scanner.close();
 
-        System.out.println("Dettagli camere dell'hotel " + hotel.getNome() + ":\n");
+        System.out.println("\n Dettagli camere dell'hotel " + hotel.getNome() + ":\n");
 
-        // ciclo tutte le camere utilizzando il metodo per farmi restituire l arraylist delle camere
+        // Uso sempre dettagli(boolean), funziona per tutte le camere grazie al polimorfismo
         for (Camera c : hotel.getCamere()) {
-
-            // Se è una suite, chiamo il metodo delle suite
-            if (c instanceof Suite) {
-                c.dettagli(); // metodo della suite con override
-            } else {
-                c.dettagli(true); // altrimenti il metodo normale
-            }
+            c.dettagli(mostraPrezzo);
             System.out.println("----------------------------");
         }
 
-        // richiamo il metodo staitco per contare quante suite ci sono
+        // richiamo il metodo statico per contare quante suite ci sono
         int numeroSuite = Hotel.contaSuite(hotel.getCamere());
         System.out.println("Numero totale di suite: " + numeroSuite);
     }
@@ -44,56 +44,56 @@ class Camera {
     private int numeroCamera;
     private float prezzo;
 
-    
     public Camera(int numeroCamera, float prezzo) {
         this.numeroCamera = numeroCamera;
         this.prezzo = prezzo;
     }
+
     public int getNumeroCamera() {
         return numeroCamera;
     }
+
     public void setNumeroCamera(int numeroCamera) {
         this.numeroCamera = numeroCamera;
     }
+
     public float getPrezzo() {
         return prezzo;
     }
+
     public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
     }
 
-    // ToString
     @Override
     public String toString() {
         return "Camera [numeroCamera=" + numeroCamera + ", prezzo=" + prezzo + "]";
     }
-    // Metodo per stmapare tutti i dettagli
+
+    // Metodo base senza prezzo per i dettagli
     public void dettagli() {
-        System.out.println("Numero camera : "+ numeroCamera);
+        System.out.println("Numero camera: " + numeroCamera);
     }
 
-    // Metodo per stampare i dettagli con il prezzo
+    // Metodo con opzione per il prezzo per i dettagli piu prezzo
     public void dettagli(boolean conPrezzo) {
-        if(conPrezzo) {
-             System.out.println("Numero camera : "+ numeroCamera + " prezzo camera : "+prezzo);
+        if (conPrezzo) {
+            System.out.println("Numero camera: " + numeroCamera + ", Prezzo camera: " + prezzo + "€");
         } else {
-            System.out.println("Numero camera: "+ numeroCamera);
+            dettagli();  // se non mette il prezzo richiama il metodo solo per i dettagli
         }
     }
 }
 
-// Classe suite che estende Camere
+// Classe suite che estende Camera
 class Suite extends Camera {
     private String serviziExtra;
 
-    // Costruttore con super per richiamare quello del padre e aggiunta di una variabile personale solo per la suite
-    public Suite(int numeroCamera, float prezzo , String serviziExtra) {
+    public Suite(int numeroCamera, float prezzo, String serviziExtra) {
         super(numeroCamera, prezzo);
         this.serviziExtra = serviziExtra;
-        
     }
 
-    // Getter e Setter
     public String getServiziExtra() {
         return serviziExtra;
     }
@@ -102,66 +102,70 @@ class Suite extends Camera {
         this.serviziExtra = serviziExtra;
     }
 
-    // ToString
     @Override
     public String toString() {
         return "Suite [serviziExtra=" + serviziExtra + "]";
     }
-        // Override del metodo dettagli
-        @Override
-        public void dettagli() {
-        super.dettagli();                                           // richiamo il metodo dettagli senza parametri dalla classe padre
-        System.out.println("Servizi extra: " + serviziExtra);       // aggiungo una stampa del caso il metodo è della suite
+
+    // Override dettagli senza prezzo
+    @Override
+    public void dettagli() {
+        super.dettagli();
+        System.out.println("Servizi extra: " + serviziExtra);
+    }
+
+    // Override dettagli con prezzo
+    @Override
+    public void dettagli(boolean conPrezzo) {
+        super.dettagli(conPrezzo);
+        System.out.println("Servizi extra: " + serviziExtra);
     }
 }
 
-//Classe hotel
+// Classe hotel
 class Hotel {
-    //Variabili d istanza
     private String nome;
     private ArrayList<Camera> listaCamere;
 
-    // Costruttore
     public Hotel(String nome) {
         this.nome = nome;
         this.listaCamere = new ArrayList<>();
     }
 
-    // Geeters Setters
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public ArrayList<Camera> getCamere() {
         return listaCamere;
     }
+
     public void setCamere(ArrayList<Camera> listaCamere) {
         this.listaCamere = listaCamere;
     }
 
-    // Metodo per aggiungere una camera alla lista
     public void addCamera(Camera camera) {
         listaCamere.add(camera);
     }
 
+    // metodo statico se è una instance of di suite aumento il contatore
     public static int contaSuite(ArrayList<Camera> listaCamere) {
         int contatore = 0;
-        for(Camera camera : listaCamere) {
-            if(camera instanceof Suite) {
+        for (Camera camera : listaCamere) {
+            if (camera instanceof Suite) {
                 contatore++;
             }
         }
         return contatore;
     }
-    
-    // ToString
+
     @Override
     public String toString() {
         return "Hotel [nome=" + nome + ", listaCamere=" + listaCamere + "]";
     }
-
-    
 }
 
