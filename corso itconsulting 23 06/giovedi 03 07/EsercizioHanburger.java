@@ -53,15 +53,15 @@ public class EsercizioHanburger {
                     System.out.println("\nGrazie per aver ordinato!");
                     System.out.println("Hai ordinato:\n");
 
-                    for (Hamburger h : ordine) {
+                    for (Hamburger h : ordine) {                                     // Stampo nome e ingredienti di ogni panini ordinato
                         System.out.println(h.getNome() + " - Ingredienti: " + h.prepara());
                     }
 
-                    System.out.printf("\nTotale da pagare: "+ totale+ "Euro");
-                    continua = false;
+                    System.out.println("\nTotale da pagare: "+ totale+ "Euro");     // Stampo il totale da pagare
+                    continua = false;                                               // Esco dal ciclo
                     break;
                 default:
-                    System.out.println("Scelta non valida.");
+                    System.out.println("Scelta non valida.");                     // Caso di default
             }
         }
 
