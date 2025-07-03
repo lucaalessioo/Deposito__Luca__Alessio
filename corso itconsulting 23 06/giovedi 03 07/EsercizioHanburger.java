@@ -13,7 +13,7 @@ public class EsercizioHanburger {
 
         // Menu della burgeria
         while (continua) {
-            System.out.println("\n--- Menu ---");
+            System.out.println("\nMenu");
             System.out.println("1. Cheeseburger - €5.50");
             System.out.println("2. VegBurger - €5.00");
             System.out.println("3. DoubleBacon - €6.50");
@@ -43,7 +43,7 @@ public class EsercizioHanburger {
                     System.out.println(bacon.prepara());
                     break;
                 case 4:                                                             // Caso 4 stampa ordine
-                    System.out.println("\n--- Ordine attuale ---");
+                    System.out.println("\nOrdine attuale");
                     for (Hamburger h : ordine) {
                         System.out.println("- " + h.getNome());
                     }
