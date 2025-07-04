@@ -1,5 +1,5 @@
 // Programma principale
-public class Application {
+public class Esercizio1 {
     public static void main(String[] args) {
         // Creazione di oggetti Auto e Moto
         Veicolo auto = new Auto("Fiat", "Panda", 2022, 5);
