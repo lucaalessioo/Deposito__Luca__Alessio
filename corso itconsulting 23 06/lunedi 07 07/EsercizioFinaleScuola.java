@@ -29,7 +29,7 @@ public class EsercizioFinaleScuola {
             
             }catch(InputMismatchException e) {
                 System.out.println("Inserisci un numero valido: ");
-                stringhe.nextLine();
+                interi.nextLine();
             }
         }while (!valido);
 
