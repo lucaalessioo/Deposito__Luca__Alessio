@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class EsercizioFinaleScuola {
 
@@ -19,7 +17,6 @@ public class EsercizioFinaleScuola {
         do {
             
             // Menu
-            
             System.out.println("\nMENU GESTIONE SCUOLA ");
             System.out.println("1. Aggiungi Studente");
             System.out.println("2. Aggiungi Docente");
@@ -32,7 +29,7 @@ public class EsercizioFinaleScuola {
             
             }catch(InputMismatchException e) {
                 System.out.println("Inserisci un numero valido: ");
-                interi.nextLine();
+                stringhe.nextLine();
             }
         }while (!valido);
 
@@ -149,13 +146,13 @@ class Studente extends Persona implements Registrable {
         
     }
 
-    // Override del metodo registrazione
+    // Override del metodo registrazione (interfaccia)
     @Override
     public void registrazione() {
       System.out.println("Registrazione tramite modulo online.");
     }
 
-    // Override del metodo descriviRuolo
+    // Override del metodo descriviRuolo (classe Persona)
     @Override
     public void descriviRuolo() {
         System.out.println("Sono uno studente della classe " +classeFrequentata);
