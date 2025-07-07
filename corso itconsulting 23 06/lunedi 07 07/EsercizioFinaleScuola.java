@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class EsercizioFinaleScuola {
@@ -9,22 +10,35 @@ public class EsercizioFinaleScuola {
         ArrayList<Persona> persone = new ArrayList<>();
         Scanner interi = new Scanner(System.in);
         Scanner stringhe = new Scanner(System.in);
-        int scelta;
+        int scelta = -1;
+        boolean valido;
 
+    do {
+        valido = false;
+    
         do {
+            
             // Menu
+            
             System.out.println("\nMENU GESTIONE SCUOLA ");
             System.out.println("1. Aggiungi Studente");
             System.out.println("2. Aggiungi Docente");
             System.out.println("3. Visualizza Persone");
             System.out.println("0. Esci");
             System.out.print("Seleziona un'opzione: ");
+            try {
             scelta = interi.nextInt();
+            valido = true;
             
+            }catch(InputMismatchException e) {
+                System.out.println("Inserisci un numero valido: ");
+                interi.nextLine();
+            }
+        }while (!valido);
 
             // Scelta utente
             switch (scelta) {
-                case 1:                                                                 // Inserimento utente
+                case 1:        // Inserimento utente                                   
                     System.out.println("\nInserisci Studente: ");
                     System.out.print("Nome: ");
                     String nomeStudente = stringhe.nextLine();
@@ -32,9 +46,11 @@ public class EsercizioFinaleScuola {
                     int etaStudente = interi.nextInt();
                     System.out.print("Classe frequentata: ");
                     String classe = stringhe.nextLine();
+    
                     Studente nuovoStudente = new Studente(nomeStudente, etaStudente, classe); // Creo un nuovo ogetto Studente
                     persone.add(nuovoStudente);                                               // Aggiungo lo studente
                     System.out.println("Studente aggiunto con successo.");
+              
                     break;
 
                 case 2:                                                                 // Inserimento Docente
