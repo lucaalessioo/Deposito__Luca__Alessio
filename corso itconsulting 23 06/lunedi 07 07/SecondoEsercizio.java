@@ -1,29 +1,59 @@
+import java.util.Scanner;
+
+
 public class SecondoEsercizio {
     public static void main(String[] args) {
-        // Primo punto di accesso al DatabaseManager
-        DatabaseManager db1 = DatabaseManager.getInstance();
-        db1.connect();
-        db1.connect();
+        Scanner scanner = new Scanner(System.in);
+        DatabaseManager db = null;     // Riferimento al Singleton
+        boolean esegui = true;         // Controlla il ciclo del menu
 
-        // Secondo punto di accesso al DatabaseManager
-        DatabaseManager db2 = DatabaseManager.getInstance();
-        db2.connect();
+        while (esegui) {
+            // Menu principale
+            System.out.println("\nMENU");
+            System.out.println("1. Crea istanza Singleton");
+            System.out.println("2. Usa Singleton");
+            System.out.println("3. Esci");
+            System.out.print("Scelta: ");
+            int scelta = scanner.nextInt(); 
 
-        // Accesso da un punto diverso del programma
-        simulazioneAccessoEsterno();
+            switch (scelta) {
+                // Creazione istanza
+                case 1:
+                    // Creazione dell'istanza Singleton se non ancora esistente
+                    if (db == null) {
+                        db = DatabaseManager.getInstance();
+                        System.out.println("Istanza creata!");
+                    } else {
+                        System.out.println("Istanza già esistente.");
+                    }
+                    break;
 
-        // Verifica se le istanze sono uguali
-        System.out.println("Le istanze sono uguali? :  " + (db1 == db2));
+                // Uso del Singleton
+                case 2:
+                    // Uso del Singleton: chiamata 
+                    if (db != null) {
+                        db.connect();               // Chiamo il metodo connect
+                    } else {
+                        System.out.println("Crea prima l istanza");
+                    }
+                    break;
 
-        // Stampa il totale delle connessioni
-        System.out.println("Connessioni totali: " + db1.contatore());
-    
-    }
-    public static void simulazioneAccessoEsterno() {
-        DatabaseManager db = DatabaseManager.getInstance();
-        db.connect();
+                case 3:
+                    // Esci
+                    esegui = false;
+                    System.out.println("Arrivederci.");
+                    break;
+
+                default:
+                    // Input non valido
+                    System.out.println("Scelta non valida.");
+            }
+        }
+
+        scanner.close(); 
     }
 }
+    
 
 // Singleton
 class DatabaseManager {
@@ -51,7 +81,7 @@ class DatabaseManager {
 
     // Metodo connect
      public void connect() {
-        
+
         contatore++;   // Incremento il contatore ogni volta che chiamo il metodo
 
         System.out.println("Ti sei connesso. Connessioni attive totali: " + contatore);
