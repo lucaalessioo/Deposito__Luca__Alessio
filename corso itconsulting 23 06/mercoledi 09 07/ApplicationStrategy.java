@@ -5,7 +5,7 @@ public class ApplicationStrategy {
         Calcolatore calcolatore = new Calcolatore();
 
         // Addizione
-        System.out.println("Addizione");
+        System.out.println("Strategia : Addizione");
 
         // Imposto la strategia di addizione nel calcolatore
         calcolatore.setOperazione(new Addizione());
@@ -13,7 +13,7 @@ public class ApplicationStrategy {
         System.out.println("Risultato Addizione: " + risultatoAddizione); 
 
         // Moltiplicazione 
-        System.out.println("\nStrategia  Moltiplicazione");
+        System.out.println("\nStrategia : Moltiplicazione");
         calcolatore.setOperazione(new Moltiplicazione());
         // Eseguo l'operazione. Moltiplicazione
         int risultatoMoltiplicazione = calcolatore.eseguiOperazione(10, 5);

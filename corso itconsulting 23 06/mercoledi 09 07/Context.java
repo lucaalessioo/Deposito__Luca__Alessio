@@ -18,7 +18,7 @@ class ConcreteStrategyB implements Strategy {
 
 // Context
 public class Context {
-    private Strategy strategy;
+    private Strategy strategy;  // Serve per richiamare il metodo dell interfaccia
 
     public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
