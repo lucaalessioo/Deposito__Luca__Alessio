@@ -54,7 +54,7 @@ public class EsercizioFactoryMedio {
                 System.out.println("Disegno completato\n");
 
               
-                System.out.println(" Notifica Osservatori per forma decorata ");
+                System.out.println(" Notifica Osservatori : forma decorata con colore!");
                 creator.notifyObservers(decoratedShape);
             }
 
@@ -93,26 +93,26 @@ class Square implements IShape {
 
 }
 
-abstract class ShapeCreator {
+abstract class ShapeCreator {                            // Soggetto da osservare e Factory
 
     public abstract IShape createShape(String tipo);
 
      private List<Observer> listaObserver = new ArrayList<>();
 
      // Metodo per aggiungere un observer alla lista
-     public void addObserver(Observer observer) {
+     public void addObserver(Observer observer) {       // aggiunge un osservatore
         listaObserver.add(observer);
     }
 
     // Metodo per rimuovere un observer alla lista
-    public void removeObserver(Observer observer) {
+    public void removeObserver(Observer observer) {     // Rimuove un osservatore
         listaObserver.remove(observer);
     }
 
      // Metodo per notificare tutti gli osservatori
-    protected void notifyObservers(IShape shape) {
+    protected void notifyObservers(IShape shape) {      // Notifica gli osservatori
         for (Observer observer : listaObserver) {
-            observer.aggiornamento(shape);
+            observer.aggiornamento(shape);              // Metodo dell interfaccia Observer implementato per il notificatore
         }
     }
 }
@@ -128,13 +128,13 @@ class Notificatore implements Observer {
     @Override
     public void aggiornamento(IShape iShape) {
             
-            System.out.println("Notifica inviata: "+ nome);
+            System.out.println("Notifica inviata: "+ nome);         // Stampa specifica dell oggetto passatogli di tipo IShape 
     }
 }
 
 // Classe base astratta per tutti i decoratori utilizzando l interfaccia per il factory come soggetto
 abstract class ShapeDecorator implements IShape {
-    
+
     protected IShape decoratedShape; // soggetto da decorare
 
     public ShapeDecorator(IShape decoratedShape) {
