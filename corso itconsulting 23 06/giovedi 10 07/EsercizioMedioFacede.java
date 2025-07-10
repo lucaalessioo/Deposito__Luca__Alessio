@@ -118,7 +118,7 @@ class ContextSistemaOperativo {
             return istanza;
         }
 
-        // Metodo di avvio accensione
+        // Metodo di avvio accensione gestito dal facede
         public void accendiComputer() {
         System.out.println("\nAccensione del computer");
         ogettoBios.inizializza();  // Inizializzazione del bios
