@@ -54,7 +54,7 @@ public class EsercizioFactoryMedio {
                 System.out.println("Disegno completato\n");
 
               
-                System.out.println(" Notifica Osservatori : forma decorata con colore!");
+                System.out.println(" Notifica Osservatori per forma decorata ");
                 creator.notifyObservers(decoratedShape);
             }
 
@@ -74,17 +74,13 @@ interface Observer {
     void aggiornamento(IShape iShape);
 }
 
+// Implementazione unica per forme base
+class FormaBase implements IShape {
+    private String tipo;
 
-class Circle implements IShape {
-
-    @Override
-    public void draw() {
-       System.out.println("Sto disegnando un cerchio");
+    public FormaBase(String tipo) {
+        this.tipo = tipo;
     }
-
-}
-
-class Square implements IShape {
 
     @Override
     public void draw() {
@@ -93,26 +89,26 @@ class Square implements IShape {
 
 }
 
-abstract class ShapeCreator {                            // Soggetto da osservare e Factory
+abstract class ShapeCreator {
 
     public abstract IShape createShape(String tipo);
 
      private List<Observer> listaObserver = new ArrayList<>();
 
      // Metodo per aggiungere un observer alla lista
-     public void addObserver(Observer observer) {       // aggiunge un osservatore
+     public void addObserver(Observer observer) {
         listaObserver.add(observer);
     }
 
     // Metodo per rimuovere un observer alla lista
-    public void removeObserver(Observer observer) {     // Rimuove un osservatore
+    public void removeObserver(Observer observer) {
         listaObserver.remove(observer);
     }
 
      // Metodo per notificare tutti gli osservatori
-    protected void notifyObservers(IShape shape) {      // Notifica gli osservatori
+    protected void notifyObservers(IShape shape) {
         for (Observer observer : listaObserver) {
-            observer.aggiornamento(shape);              // Metodo dell interfaccia Observer implementato per il notificatore
+            observer.aggiornamento(shape);
         }
     }
 }
@@ -128,61 +124,91 @@ class Notificatore implements Observer {
     @Override
     public void aggiornamento(IShape iShape) {
             
-            System.out.println("Notifica inviata: "+ nome);         // Stampa specifica dell oggetto passatogli di tipo IShape 
+            System.out.println("Notifica inviata: "+ nome);
     }
 }
 
-// Classe base astratta per tutti i decoratori utilizzando l interfaccia per il factory come soggetto
+// Decoratore base
 abstract class ShapeDecorator implements IShape {
-
+    
     protected IShape decoratedShape; // soggetto da decorare
 
     public ShapeDecorator(IShape decoratedShape) {
         this.decoratedShape = decoratedShape;
     }
 
-    // Il metodo draw() dei decoratori chiamerà quello della forma decorata quindi del soggetto in questo caso
     @Override
     public void draw() {
-        decoratedShape.draw(); // Delega il disegno alla forma sottostante
+        decoratedShape.draw();
     }
 }
 
-// Decoratore concreto: aggiunge un bordo colorato
+// Decoratore concreto
 class ColoreShapeDecorator extends ShapeDecorator {
     private String color;
 
-    public ColoreShapeDecorator(IShape decoratedShape, String color) {  // Prendo il soggetto piu il colore
+    public ColoreShapeDecorator(IShape decoratedShape, String color) {
         super(decoratedShape);
         this.color = color;
     }
 
     @Override
     public void draw() {
-        super.draw(); // Prima disegna la forma originale
-        addColoredBorder(); // Poi aggiunge il colore
-    }
-
-    private void addColoredBorder() {
+        super.draw();
         System.out.println("Aggiungo un bordo di colore " + color + ".");
     }
 }
 
-// Classi concrete per creare oggetti specifici in base alla scelta
-class CircleShapeCreator extends ShapeCreator{
+// Observer concreto
+class Notificatore implements Observer {
+    private String nome;
 
-    @Override
-    public IShape createShape(String tipo) {
-        return new Circle();
+    public Notificatore(String nome) {
+        this.nome = nome;
     }
 
-}
-
-class SquareShapeCreator extends ShapeCreator {
-
     @Override
-    public IShape createShape(String tipo) {
-        return new Square();
+    public void aggiornamento(IShape iShape) {
+        System.out.println("Notifica inviata: " + nome);
     }
-
 }
+
+// Main
+public class EsercizioFactoryCompatto {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        FormaCreator creator = new FormaCreator();
+        Notificatore logger = new Notificatore("Logger principale");
+        creator.addObserver(logger);
+
+        String input;
+        do {
+            System.out.println("\nQuale forma vuoi creare? (circle, square) o 'fine' per uscire:");
+            input = scanner.nextLine().toLowerCase();
+
+            if (input.equals("fine")) {
+                System.out.println("Uscita dal programma.");
+                break;
+            }
+
+            if (!input.equals("circle") && !input.equals("square")) {
+                System.out.println("Tipo di forma non valido. Riprova.");
+                continue;
+            }
+
+            IShape baseShape = creator.createShape(input);
+            IShape decorated = new ColoreShapeDecorator(baseShape, "Rosso");
+
+            System.out.println("Disegno della forma decorata:");
+            decorated.draw();
+            System.out.println("Disegno completato.\n");
+
+            System.out.println("Notifica osservatori:");
+            creator.notifyObservers(decorated);
+
+        } while (true);
+
+        scanner.close();
+    }
+}
+
