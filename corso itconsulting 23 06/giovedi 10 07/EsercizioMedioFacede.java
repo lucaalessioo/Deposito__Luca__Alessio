@@ -134,5 +134,4 @@ class ContextSistemaOperativo {
         this.oggettoSistemaOperativo.setStrategyAvvio(strategy);
         System.out.println("Strategia di avvio del Sistema Operativo impostata su " + strategy + ".");
     }
-
     }
