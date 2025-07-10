@@ -97,11 +97,24 @@ class ColoreShapeDecorator extends ShapeDecorator {
     }
 }
 
+// Creatore generico (Simple Factory e Soggetto Observer)
 class FormaCreator {
     private List<Observer> observers = new ArrayList<>();
-    
+
     public void addObserver(Observer obs) {
         observers.add(obs);
+    }
+
+    public void notifyObservers(IShape shape) {
+        
+        for (Observer obs : observers) {
+            obs.aggiornamento(shape);
+        }
+    }
+
+    public IShape createShape(String input) {
+    
+        return new FormaBase(input);
     }
 }
 
