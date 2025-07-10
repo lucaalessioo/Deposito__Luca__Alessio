@@ -2,68 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class EsercizioFactoryMedio {
-    public static void main(String[] args) {
-         Scanner scanner = new Scanner(System.in);
-        ShapeCreator creator = null;
-
-        // Inizializza gli osservatori e aggiungili al creator
-        Notificatore logger = new Notificatore("Logger principale");
-       
-
-        // Loop per permettere all'utente di creare più forme
-        String input;
-        do {
-            System.out.println("\nQuale forma vuoi creare? (circle, square) o 'fine' per uscire:");
-            input = scanner.nextLine().toLowerCase();
-
-            if (input.equals("fine")) {
-                System.out.println("Uscita dal programma.");
-                break;
-            }
-
-            // Reset creator per ogni ciclo
-            creator = null;
-
-            switch (input) {
-                case "circle":
-                    creator = new CircleShapeCreator();
-                    break;
-                case "square":
-                    creator = new SquareShapeCreator();
-                    break;
-                default:
-                    System.out.println("Tipo di forma non valido. Riprova.");
-                    break;
-            }
-
-            if (creator != null) {
-               
-                creator.addObserver(logger);
-                
-
-               
-                IShape baseShape = creator.createShape(input); 
-
-                // Applichiamo i decoratori alla forma base
-                IShape decoratedShape = new ColoreShapeDecorator(baseShape, "Rosso");
-               
-
-                System.out.println("Disegno della forma decorata ");
-                decoratedShape.draw(); // Questo chiamerà il draw dei decoratori e poi della forma base
-                System.out.println("Disegno completato\n");
-
-              
-                System.out.println(" Notifica Osservatori per forma decorata ");
-                creator.notifyObservers(decoratedShape);
-            }
-
-        } while (true);
-
-        scanner.close();
-    }
-}
-
 // Interfaccia per Factory
 interface IShape {
     void draw();
@@ -159,17 +97,11 @@ class ColoreShapeDecorator extends ShapeDecorator {
     }
 }
 
-// Observer concreto
-class Notificatore implements Observer {
-    private String nome;
-
-    public Notificatore(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public void aggiornamento(IShape iShape) {
-        System.out.println("Notifica inviata: " + nome);
+class FormaCreator {
+    private List<Observer> observers = new ArrayList<>();
+    
+    public void addObserver(Observer obs) {
+        observers.add(obs);
     }
 }
 
