@@ -4,12 +4,9 @@ public class EsercizioMedioFacede {
         // Otteniamo l'unica istanza del Facade (grazie al pattern Singleton)
         ComputerFacedeSingleton computer = ComputerFacedeSingleton.getInstance();
 
-        
         System.out.println("Avvio del PC in modalità normale");
         computer.accendiComputer(); //con un singolo metodo ne richiamo 3 grazie al facede
 
-       
-        
         // Questo mostra la flessibilità del pattern Strategy.
         System.out.println("\nCambio Strategia in modalita Sicura"); // Imposto una nuova strategia per il Sistema Operativo tramite il Facade.
         computer.impostaStrategyAvvioOS(new StrategiaSicura());
@@ -18,7 +15,6 @@ public class EsercizioMedioFacede {
         computer.accendiComputer();
 
         
-        // Cerchiamo di ottenere un'altra istanza del Facade.
         // Grazie al Singleton, ci verrà restituita la stessa istanza di 'computer'.
         ComputerFacedeSingleton anotherComputerInstance = ComputerFacedeSingleton.getInstance();  // Verifica del pattern Singleton 
         System.out.println("\nVerifica Singleton");
