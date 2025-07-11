@@ -2,8 +2,8 @@ public class EsercizioAdapterMedio {
 
     public static void main(String[] args) {
 
-    //  Test del sistema Legacy diretto 
-        System.out.println("--- Test del Sistema Legacy (senza Adapter) ---");
+    //  Test del sistema Legacy quindi quelle vecchio
+        System.out.println("Test del Sistema Legacy (senza Adapter)");
         LegacyUserSystem legacySystemDirect = new LegacyUserSystem();
         legacySystemDirect.addUser();
         legacySystemDirect.deleteUser();
@@ -53,7 +53,7 @@ public class EsercizioAdapterMedio {
     }
 }
 
-// Target
+// Target da adattare 
 interface UserManagment {
 
         void createUser();
@@ -66,7 +66,7 @@ interface Strategy {
     void eseguiStrategia(UserManagment userManager);
 }
 
-// Classe concreta per la strategy
+// Classe concreta per la strategy per creare
 class CreaUtenteStrategy implements Strategy {
 
     @Override
@@ -74,6 +74,8 @@ class CreaUtenteStrategy implements Strategy {
         userManager.createUser();
     }
 }
+
+// Classe concreta per la stratedia per cancellare 
 class CancellaUtenteStrategy implements Strategy {
 
     @Override
@@ -81,6 +83,8 @@ class CancellaUtenteStrategy implements Strategy {
         userManager.deleteUser();
     }
 }
+
+// Classe per la strategia di ricerca
 class CercaUtenteStrategy implements Strategy {
 
     @Override
@@ -89,6 +93,7 @@ class CercaUtenteStrategy implements Strategy {
     }
 }
 
+// Classe per chiamare tutti i metodi insieme
 class ChiamaTuttiMetodiStrategy implements Strategy {
 
     @Override
@@ -151,16 +156,18 @@ class Facede {
         this.userManagment = new UserManagmentAdapter(legacySystem);
     }
 
+    // Setto la strategia 
     public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
         System.out.println("Strategia: " +strategy+ " impostata");
     }
 
+    // utilizzo la strategia
     public void utilizzaStrategia() {
         strategy.eseguiStrategia(userManagment);
     }
 
-    // Metodo per richiamare i 3 metodi dell adattatore
+    // Metodo per richiamare i 3 metodi dell adattatore quindi il FACADE
     public void utilizzaFacede() {
         System.out.print("\nCreo utente con adattatore :");
        
