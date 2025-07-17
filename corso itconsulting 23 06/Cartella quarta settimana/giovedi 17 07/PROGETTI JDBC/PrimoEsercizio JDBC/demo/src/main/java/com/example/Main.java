@@ -14,8 +14,8 @@ public class Main {
 
     // Costanti statiche per la connessione al db
     private static final String url = "jdbc:mysql://localhost:3306/sakila"; 
-    private static final String user = "root";
-    private static final String password = "root";
+    private static final String user = "";
+    private static final String password = "";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
