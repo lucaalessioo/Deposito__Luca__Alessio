@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Esercizio1{
 
     // Costanti statiche per la connessione al db
     private static final String url = "jdbc:mysql://localhost:3306/sakila"; 
