@@ -1,6 +1,6 @@
 public class Application {
     public static void main(String[] args) {
-        ComprovaIncapsulamento comprovaIncapsulamento = new ComprovaEreditarieta("Domanda 1", "Voto 10 :)")
+        ComprovaIncapsulamento comprovaIncapsulamento = new ComprovaEreditarieta("Domanda 1", "Voto 10 :)");
     }
 }
 
