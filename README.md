@@ -7,6 +7,8 @@ Cartella seconda settimana approfondimento dell OOP.
 
 Cartella terza settimana Design Pattern
 
-Le restanti due cartelle sono quelle specifiche per i due test settimanali svolti.
+Cartella quarta settimana SQL MySql e JDBC e in piu troverai una sotto cartella con all interno l esercizio finale dei patter
 
-Cartella quarta settimana. In questa cartella troverai una sotto cartella con all interno l esercizio finale dei patter e in piu tratteremo la parte di SQL
+Le restanti cartelle sono quelle specifiche per i test settimanali svolti.
+
+
