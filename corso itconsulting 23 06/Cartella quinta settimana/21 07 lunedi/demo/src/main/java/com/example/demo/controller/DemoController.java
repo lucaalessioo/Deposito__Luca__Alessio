@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.MessaggioService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -22,8 +22,7 @@ public class DemoController {
 
     @GetMapping("/saluta")
     public String saluta() {
-        messaggioService.saluta();
-       return "Saluto inviato";
+       return messaggioService.saluta();
     }
 
     
