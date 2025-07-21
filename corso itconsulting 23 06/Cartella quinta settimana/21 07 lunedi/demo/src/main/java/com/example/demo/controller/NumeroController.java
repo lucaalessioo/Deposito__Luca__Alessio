@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Numero;
+import com.example.demo.model.Prodotto;
 
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,31 +36,36 @@ public class NumeroController {
 
     // 2. Aggiungere numeri a un array con la POST
     @PostMapping
-    public Numero crea(@RequestBody Numero nuovo) { // Accetta un oggetto Numero nel corpo
+    public ResponseEntity<Numero> crea(@RequestBody Numero nuovo) { // Accetta un oggetto Numero nel corpo
         nuovo.setId(idCounter++);
         numeri.add(nuovo);
-        return nuovo;
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuovo);
+
     }
 
     // Vedere un numero specifico per ID (GET)
-    @GetMapping("/{id}")
-    public Numero getById(@PathVariable Long id) {
+     @GetMapping("/{id}")
+        public ResponseEntity<Numero> getById(@PathVariable Long id) {
         return numeri.stream()
-                .filter(n -> n.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-    }
+        .filter(p -> p.getId().equals(id))
+        .findFirst()
+        .map(ResponseEntity::ok) // status 200 OK con il prodotto
+        .orElse(ResponseEntity.notFound().build()); // status 404
+
+}
 
     // Aggiornare un numero esistente (PUT)
     @PutMapping("/{id}")
-    public Numero aggiorna(@PathVariable Long id, @RequestBody Numero modificato) {
-        for (Numero n : numeri) { // Itera sui numeri
-            if (n.getId().equals(id)) {
-                n.setValore(modificato.getValore()); // Aggiorna solo il valore
-                return n;
+    public ResponseEntity<Numero> aggiorna(@PathVariable Long id, @RequestBody Numero modificato) {
+        for (Numero p : numeri) {
+            if (p.getId().equals(id)) {
+                p.setId(modificato.getId());
+                p.setValore(modificato.getValore());
+                return ResponseEntity.ok(p);
             }
         }
-        return null; 
+        return ResponseEntity.notFound().build();
     }
 
     // 3. Vedere la somma totale dei numeri (GET)
@@ -82,4 +89,6 @@ public class NumeroController {
             return "Numero con ID " + id + " non trovato.";
         }
     }
+
 }
+
