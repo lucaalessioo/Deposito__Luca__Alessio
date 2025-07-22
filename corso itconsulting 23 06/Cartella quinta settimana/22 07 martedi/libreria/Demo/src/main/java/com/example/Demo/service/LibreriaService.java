@@ -1,40 +1,60 @@
 package com.example.Demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.Demo.model.Libreria;
-
-import java.util.*;
+import com.example.Demo.repository.LibreriaRepository;
 
 @Service
 public class LibreriaService {
-private final List<Libreria> listaLibri = new ArrayList<>();
+
+  private final LibreriaRepository repo;
+
+  LibreriaService(LibreriaRepository libroRepository) {
+    this.repo = libroRepository;
+  }
+
+  public List<Libreria> getAll() {
+    List<Libreria> lista = new ArrayList<>();
+    repo.findAll().forEach(lista::add);
+    return lista;
+  }
+
+  public Optional<Libreria> getById(Long id) {
+    return repo.findById(id);
+  }
+
+  public Libreria create(Libreria nuovo) {
+    return repo.save(nuovo);
+  }
+
+  public Optional<Libreria> update(Long id, Libreria modificata) {
+    return repo.findById(id).map(t -> {
+      t.setTitolo(modificata.getTitolo());
+      t.setAutore(modificata.getAutore());
+      t.setPrezzo(modificata.getPrezzo());
+      return repo.save(t);
+    });
+  }
+
+  public boolean delete(Long id) {
+    if (repo.existsById(id)) {
+      repo.deleteById(id);
+      return true;
+    }
+    return false;
+  }
 
 
-public List<Libreria> getAll() {
-return listaLibri;
-}
+  public List<Libreria> getByAutore(String autoreKey) {
+    return repo.findByAutoreContainingIgnoreCase(autoreKey);
+  }
 
-public Optional<Libreria> getByTitolo(String titolo) {
-return listaLibri.stream().filter(t -> t.getTitolo().equals(titolo)).findFirst();
-}
-
-public Libreria create(Libreria nuovo) {
-listaLibri.add(nuovo);
-return nuovo;
-}
-
-public Optional<Libreria> update(String titolo, Libreria modificato) {
-return getByTitolo(titolo).map(libro -> {
-libro.setTitolo(modificato.getTitolo());
-libro.setAutore(modificato.getAutore());
-libro.setPrezzo(modificato.getPrezzo());
-
-return libro;
-});
-}
-
-public boolean delete(String titolo) {
-return listaLibri.removeIf(t -> t.getTitolo().equals(titolo));
-}
+  public List<Libreria> getByTitolo(String titoloKey) {
+    return repo.findByTitoloContainingIgnoreCase(titoloKey);
+  }
 }

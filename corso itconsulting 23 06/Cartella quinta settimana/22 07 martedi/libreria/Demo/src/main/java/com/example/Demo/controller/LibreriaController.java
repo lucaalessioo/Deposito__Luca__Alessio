@@ -1,12 +1,17 @@
 package com.example.Demo.controller;
 
+
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Demo.model.Libreria;
+
 import com.example.Demo.service.LibreriaService;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/libreria")
@@ -23,9 +28,9 @@ public class LibreriaController {
         return service.getAll();
     }
 
-    @GetMapping("/{titolo}")
-    public ResponseEntity<Libreria> getById(@PathVariable String titolo) {
-        return service.getByTitolo(titolo)
+    @GetMapping("/{id}")
+    public ResponseEntity<Libreria> getById(@PathVariable Long id) {
+        return service.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -36,16 +41,27 @@ public class LibreriaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(creato);
     }
 
-    @PutMapping("/{titolo}")
-    public ResponseEntity<Libreria> update(@PathVariable String titolo, @RequestBody Libreria modificato) {
-        return service.update(titolo, modificato)
+    @PutMapping("/{id}")
+    public ResponseEntity<Libreria> update(@PathVariable Long id, @RequestBody Libreria modificato) {
+        return service.update(id, modificato)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{titolo}")
-    public ResponseEntity<Void> delete(@PathVariable String titolo) {
-        boolean rimosso = service.delete(titolo);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        boolean rimosso = service.delete(id);
         return rimosso ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/{titolo}")
+    public  List<Libreria> getByTitolo(@PathVariable String titolo) {
+        return service.getByTitolo(titolo);
+    }
+
+    @GetMapping("/{autore}")
+    public  List<Libreria> getByAutore(@PathVariable String autore) {
+        return service.getByAutore(autore);
+    }
+    
 }
